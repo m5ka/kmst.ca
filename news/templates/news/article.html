@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags oderian %}
+
+{% block pre_content %}
+    {% if page.image %}
+        {% image page.image fill-1920x450 as hero_image %}
+        <div class="hero-image" style="background-image:url('{{ hero_image.url }}');"></div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="main-and-aside">
+        <article class="content">
+            <div class="headline">
+                <h2 class="headline__title">{{ page.title }}</h2>
+                <p class="headline__metadata">
+                    <span class="headline__category">{{ page.get_category_display }}</span>
+                    {{ page.first_published_at|oderian_dateago }}
+                </p>
+            </div>
+            {% for block in page.body %}
+                {% include_block block %}
+            {% endfor %}
+        </article>
+        <aside>
+            <h3>Lese auge</h3>
+        </aside>
+    </div>
+{% endblock content %}

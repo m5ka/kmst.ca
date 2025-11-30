@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block nav_divider %}{% endblock %}
+
+{% block pre_content %}
+    <div class="hero-title hero-title--{{ page.colour }}">
+        <div class="hero-title__icon"><i class="bx {{ page.icon }}"></i></div>
+        <div class="hero-title__body">
+            <h2>{{ page.title }}</h2>
+            {{ page.tagline|safe }}
+        </div>
+    </div>
+{% endblock pre_content %}
+
+{% block content %}
+    {{ pre_body|safe }}
+    {% regroup children by category as categories %}
+    {% for category in categories %}
+        <div class="index-category">
+            <h3 class="index-category__heading">
+                {{ category.grouper|default_if_none:"Aliá" }}
+            </h3>
+            {% if category.grouper.tagline %}
+                <div class="index-category__tagline">
+                    {{ category.grouper.tagline|richtext }}
+                </div>
+            {% endif %}
+            <ul class="index-category__list">
+                {% for child in category.list %}
+                    <li class="index-category__item">
+                        <i class="bx bx-arrow-right-circle index-category__icon"></i>
+                        <a class="index-category__link" href="{% pageurl child %}">
+                            <h3 class="index-category__title">{{ child.title }}</h3>
+                            {% if child.search_description %}
+                                <p class="index-category__description">{{ child.search_description }}</p>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+    {{ post_body|safe }}
+{% endblock content %}

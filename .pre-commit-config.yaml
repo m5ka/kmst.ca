@@ -1,0 +1,26 @@
+fail_fast: true
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
+repos:
+  - repo: local
+    hooks:
+      - id: lint
+        name: Linting Python
+        entry: make checkpy
+        language: system
+        types: [file, python]
+        stages: [pre-commit]
+      - id: checkmigrations
+        name: Checking migrations
+        entry: make checkmigrations
+        language: system
+        types: [file, python]
+        stages: [pre-commit]
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: "v4.2.0"
+    hooks:
+      - id: conventional-pre-commit
+        name: Checking conventional commit message
+        stages: [commit-msg]
+        args: []

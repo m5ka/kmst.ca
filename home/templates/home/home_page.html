@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags oderian %}
+
+{% block nav_search %}{% endblock %}
+
+{% block nav_divider %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block pre_content %}
+    <div class="hero-search">
+        <h2 class="hero-search__heading">Ceme uelé en uelmannam mediám ad kmstaimares margatiám geldamqe</h2>
+        <form action="{% url "search" %}" method="get" class="hero-search__form">
+            <label for="id_query" class="hero-search__label">Sagi</label>
+            <div class="hero-search__control">
+                <input type="text" id="id_query" name="query" class="hero-search__input">
+                <button type="submit" aria-label="Sagi" class="hero-search__button">
+                    <i class="bx bx-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <hr>
+{% endblock pre_content %}
+
+{% block content %}
+    <div class="cards">
+        {% for child in children %}
+            <a href="{% pageurl child %}" class="card">
+                <i class="bx {{ child.icon }} card__icon"></i>
+                <div class="card__body">
+                    <h3 class="card__title">{{ child.title }}</h3>
+                    {{ child.tagline|safe }}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <h2 class="heading">Neuiases ueittí</h2>
+    <div class="article-stack">
+        {% for article in articles %}
+            <a href="{% pageurl article %}" class="article-stack-item">
+                {% image article.image fill-500x250 class="article-stack-item__image" %}
+                <h3 class="article-stack-item__headline">{{ article.title }}</h3>
+                {% if article.search_description %}
+                    <p class="article-stack-item__excerpt">{{ article.search_description }}</p>
+                {% endif %}
+                <p class="article-stack-item__metadata">
+                    <span class="article-stack-item__category">{{ article.get_category_display }}</span>
+                    <span class="article-stack-item__time">{{ article.last_published_at|oderian_dateago }}</span>
+                </p>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

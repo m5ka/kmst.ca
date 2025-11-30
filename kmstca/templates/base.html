@@ -1,0 +1,120 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+            {% wagtail_site as current_site %}
+            {% if current_site and current_site.site_name %}| {{ current_site.site_name }}{% endif %}
+            {% endblock %}
+        </title>
+        {% if page.search_description %}
+        <meta name="description" content="{{ page.search_description }}" />
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {% if request.in_preview_panel %}
+        <base target="_blank">
+        {% endif %}
+
+        <link rel="stylesheet" href="{% static "css/reset.css" %}">
+        <link rel="stylesheet" href="{% static "css/main.css" %}">
+        <link href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css" rel="stylesheet">
+        {% block extra_css %}{% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {% wagtailuserbar %}
+        <div class="security-banner">
+            <details class="security-banner__dropdown">
+                <summary class="security-banner__label">
+                    <i class="bx bx-lock security-banner__icon"></i> Uárantí saitám Kasnanís Kmstaimares
+                    <i class="bx bx-chevron-down security-banner__chevron--closed"></i>
+                    <i class="bx bx-chevron-up security-banner__chevron--open"></i>
+                </summary>
+                <div class="security-banner__body">
+                    <div>
+                        <h2>Meiniti kmst.ca nás uárantim</h2>
+                        <p>Neudanti aiué saitás Kasnanís Kmstaimares kmst.ca-lndenamm. Frai Isuám dailinti leudinám margatiám, sagi aiué tkistátifalkám (anitamfalkám) ar arni saitames uárants santm.</p>
+                    </div>
+                    <div>
+                        <h2>Tnká esti kí saitám</h2>
+                        <p>Arniti https:// Isuám iugantm Ie kam uáranti saitami Isuámqe gebantm tnké margatiám.</p>
+                    </div>
+                </div>
+            </details>
+        </div>
+        <header>
+            <a href="/" class="brand">
+                <img src="{% static "images/kasnani.png" %}" alt="Kasnanís Brattén" height="48">
+                <h1>kmst<span class="accent">.</span>ca</h1>
+                <p>Kasnanís Kmstaimar</p>
+            </a>
+            <nav class="header-nav">
+                <ul>
+                    <li><a href="#">Stautá <i class="bx bx-chevron-down"></i></a></li>
+                    {% block nav_search %}
+                    <li><a href="{% url "search" %}" aria-label="Sagitis"><i class="bx bx-search"></i></a></li>
+                    {% endblock nav_search %}
+                    <li><a href="#" aria-label="Mén Samitis"><i class="bx bx-user"></i></a></li>
+                </ul>
+            </nav>
+        </header>
+
+        {% block nav_divider %}<hr>{% endblock %}
+
+        {% block breadcrumb %}
+            <nav class="breadcrumb">
+                <div class="breadcrumb__container">
+                    <ul class="breadcrumb__list">
+                        {% block breadcrumb_ancestors %}
+                            {% for ancestor in page.get_ancestors %}
+                                {% if ancestor.depth > 1 %}
+                                    <li class="breadcrumb__item">
+                                        {% if ancestor.depth == 2 %}
+                                            <a class="breadcrumb__link" href="{% pageurl ancestor %}" aria-label="{{ ancestor.title }}">
+                                                <i class="bx bx-home"></i>
+                                            </a>
+                                        {% else %}
+                                            <a class="breadcrumb__link" href="{% pageurl ancestor %}">
+                                                {{ ancestor.title }}
+                                            </a>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endblock breadcrumb_ancestors %}
+                        {% block breadcrumb_current %}
+                            <li class="breadcrumb__item" aria-current="page">
+                                {{ page.title }}
+                            </li>
+                        {% endblock breadcrumb_current %}
+                    </ul>
+                </div>
+            </nav>
+        {% endblock breadcrumb %}
+
+        {% block pre_content %}{% endblock %}
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        {% block post_content %}{% endblock %}
+
+        <hr/>
+        <footer class="footer">
+            <nav class="footer__nav">
+                <!-- <a href="#"></a> footer navigation links to go here -->
+            </nav>
+            <div class="footer__bottom">
+                &copy;2025 Rígiám Kasnanís
+            </div>
+        </footer>
+
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>
