@@ -13,6 +13,7 @@ STORAGES = {
         "OPTIONS": {"bucket_name": os.environ["KMSTCA_STORAGE_BUCKET_STATIC"]},
     },
 }
+AWS_S3_ENDPOINT_URL = os.environ["KMSTCA_S3_ENDPOINT_URL"]
 AWS_S3_ACCESS_KEY_ID = os.environ["KMSTCA_S3_ACCESS_KEY"]
 AWS_S3_SECRET_ACCESS_KEY = os.environ["KMSTCA_S3_SECRET_KEY"]
 
