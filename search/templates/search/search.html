@@ -11,7 +11,7 @@
     <form action="{% url 'search' %}" method="get" class="search-form">
         <label for="id_query" class="search-form__label">Sagi</label>
         <div class="search-form__control">
-            <input class="search-form__input" id="id_query" type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
+            <input class="search-form__input" id="id_query" type="text" name="iskatis"{% if search_query %} value="{{ search_query }}"{% endif %}>
             <button type="submit" class="search-form__button" aria-label="Sagi">
                 <i class="bx bx-search"></i>
             </button>
@@ -36,14 +36,14 @@
     <div class="search-paginator">
         {% if search_results.has_previous %}
             <a
-                href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}"
+                href="{% url 'search' %}?iskatis={{ search_query|urlencode }}&amp;laubam={{ search_results.previous_page_number }}"
                 class="search-paginator__link"
             ><i class="bx bx-arrow-left"></i> Frná</a>
         {% endif %}
 
         {% if search_results.has_next %}
             <a
-                href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}"
+                href="{% url 'search' %}?iskatis={{ search_query|urlencode }}&amp;laubam={{ search_results.next_page_number }}"
                 class="search-paginator__link"
             >Seqntí <i class="bx bx-arrow-right"></i></a>
         {% endif %}

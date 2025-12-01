@@ -11,8 +11,8 @@ from wagtail.models import Page
 
 
 def search(request):
-    search_query = request.GET.get("query", None)
-    page = request.GET.get("page", 1)
+    search_query = request.GET.get("iskatis", None)
+    page = request.GET.get("laubam", 1)
 
     # Search
     if search_query:
