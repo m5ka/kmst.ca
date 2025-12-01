@@ -1,3 +1,5 @@
+from django.db.models import CharField
+from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 
 from infodesk.models import IndexPage
@@ -6,6 +8,9 @@ from news.models import Article
 
 
 class HomePage(Page):
+    heading = CharField(max_length=511)
+
+    content_panels = Page.content_panels + [FieldPanel("heading")]
     max_count = 1
 
     def get_context(self, request, *args, **kwargs):
