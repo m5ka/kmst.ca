@@ -38,23 +38,25 @@
                     <i class="bx bx-chevron-up security-banner__chevron--open"></i>
                 </summary>
                 <div class="security-banner__body">
-                    <div>
+                    <div class="security-banner__section">
                         <h2>Meiniti kmst.ca nás uárantim</h2>
                         <p>Neudanti aiué saitás Kasnanís Kmstaimares kmst.ca-lndenamm. Frai Isuám dailinti leudinám margatiám, sagi aiué tkistátifalkám (anitamfalkám) ar arni saitames uárants santm.</p>
                     </div>
-                    <div>
+                    <div class="security-banner__section">
                         <h2>Tnká esti kí saitám</h2>
                         <p>Arniti https:// Isuám iugantm Ie kam uáranti saitami Isuámqe gebantm tnké margatiám.</p>
                     </div>
                 </div>
             </details>
         </div>
-        <header>
-            <a href="/" class="brand">
-                <img src="{% static "images/kasnani.png" %}" alt="Kasnanís Brattén" height="48">
-                <h1>kmst<span class="accent">.</span>ca</h1>
-                <p>Kasnanís Kmstaimar</p>
-            </a>
+        <header class="header">
+            <div class="brand">
+                <a href="/" class="brand__link">
+                    <img class="brand__image" src="{% static "images/kasnani.png" %}" alt="Kasnanís Brattén" height="48">
+                    <h1 class="brand__title">kmst<span class="accent">.</span>ca</h1>
+                </a>
+                <p class="brand__tagline">Kasnanís Kmstaimar</p>
+            </div>
             <nav class="header-nav">
                 <ul>
                     <li><a href="#">Stautá <i class="bx bx-chevron-down"></i></a></li>
