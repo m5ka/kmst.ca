@@ -29,6 +29,6 @@ LOGGING = {
         "console": {"class": "logging.StreamHandler", "formatter": "verbose"},
     },
     "loggers": {
-        "django": {"handlers": ["console"], "level": "DEBUG", "propagate": True}
+        "django": {"handlers": ["console"], "level": "WARNING", "propagate": True}
     },
 }
