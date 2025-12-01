@@ -30,4 +30,5 @@ RUN chown wagtail:wagtail /app
 COPY --chown=wagtail:wagtail . .
 
 USER wagtail
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 kmstca.wsgi:application
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["gunicorn", "--bind", ":$PORT", "--workers", "1", "--threads", "8", "--timeout", "0", "kmstca.wsgi:application"]
