@@ -1,13 +1,21 @@
+from functools import lru_cache
+
 from django.db.models import CASCADE, SET_NULL, BooleanField, CharField, ForeignKey
 from modelcluster.models import ParentalKey
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.fields import RichTextField, StreamField
-from wagtail.models import Orderable, Page
+from wagtail.models import ContentType, Orderable, Page
 from wagtail.search.index import FilterField, SearchField
 
 from kmstca.blocks import KmstcaBlocks
 from kmstca.constants import Colour
+
+
+@lru_cache
+def get_category_page_content_type_id() -> int | None:
+    content_type = ContentType.objects.get_for_model(CategoryPage)
+    return content_type.id if content_type is not None else None
 
 
 class CategoryPageSubcategory(Orderable):
@@ -26,7 +34,8 @@ class ContentPageForm(WagtailAdminPageForm):
         super().__init__(*args, **kwargs)
         if "parent_page" in kwargs and kwargs["parent_page"] is not None:
             parent_page = kwargs["parent_page"]
-            if isinstance(parent_page, CategoryPage):
+            category_page_content_type_id = get_category_page_content_type_id()
+            if parent_page.content_type_id == category_page_content_type_id:
                 self.fields[
                     "subcategory"
                 ].queryset = CategoryPageSubcategory.objects.filter(
