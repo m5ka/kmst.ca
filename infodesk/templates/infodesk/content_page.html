@@ -6,4 +6,24 @@
     {% for block in page.body %}
         {% include_block block %}
     {% endfor %}
+    {% if page.act_as_index %}
+        {% regroup children by first_letter as child_groups %}
+        <div class="index-nav">
+            <ul class="index-nav__shortcuts">
+                {% for child_group in child_groups %}
+                    <li><a href="#{{ child_group.grouper }}" class="index-nav__shortcut">{{ child_group.grouper }}</a></li>
+                {% endfor %}
+            </ul>
+            {% for child_group in child_groups %}
+                <h3 class="heading index-nav__heading" id="{{ child_group.grouper }}">{{ child_group.grouper }}</h3>
+                <ul class="index-nav__group">
+                    {% for child in child_group.list %}
+                        <li class="index-nav__item">
+                            <a href="{% pageurl child %}" class="index-nav__link">{{ child.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock content %}

@@ -755,3 +755,36 @@ hr {
   margin-block-start: .4rem;
   color: var(--coal);
 }
+
+.index-nav {
+  margin-block-start: 2.6rem;
+}
+
+.index-nav__shortcuts {
+  display: flex;
+  flex-flow: row wrap;
+  column-gap: 1.2rem;
+  font-size: 2rem;
+  margin-block-end: 2.8rem;
+  width: fit-content;
+  border-bottom: 1px solid #ccc;
+  padding-block-end: 1.2rem;
+}
+
+.index-nav__shortcut {
+  font-size: 2rem;
+  color: var(--black);
+}
+
+.index-nav__item {
+  margin-block-end: 1rem;
+}
+
+.index-nav__link {
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
+.index-nav__group {
+  margin-block-end: 2.8rem;
+}

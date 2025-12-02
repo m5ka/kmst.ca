@@ -1,4 +1,4 @@
-from django.db.models import CASCADE, SET_NULL, CharField, ForeignKey
+from django.db.models import CASCADE, SET_NULL, BooleanField, CharField, ForeignKey
 from modelcluster.models import ParentalKey
 from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
@@ -10,9 +10,9 @@ from kmstca.blocks import KmstcaBlocks
 from kmstca.constants import Colour
 
 
-class IndexPageCategory(Orderable):
-    index_page = ParentalKey(
-        "infodesk.IndexPage", related_name="categories", on_delete=CASCADE
+class CategoryPageSubcategory(Orderable):
+    category_page = ParentalKey(
+        "infodesk.CategoryPage", related_name="subcategories", on_delete=CASCADE
     )
     name = CharField(max_length=64)
     tagline = RichTextField(blank=True)
@@ -25,33 +25,56 @@ class ContentPageForm(WagtailAdminPageForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if "parent_page" in kwargs and kwargs["parent_page"] is not None:
-            self.fields["category"].queryset = IndexPageCategory.objects.filter(
-                index_page=kwargs["parent_page"]
-            )
+            parent_page = kwargs["parent_page"]
+            if isinstance(parent_page, CategoryPage):
+                self.fields[
+                    "subcategory"
+                ].queryset = CategoryPageSubcategory.objects.filter(
+                    category_page=parent_page
+                )
+            else:
+                self.fields["subcategory"].disabled = True
 
 
 class ContentPage(Page):
-    category = ForeignKey(
-        "infodesk.IndexPageCategory",
+    subcategory = ForeignKey(
+        "infodesk.CategoryPageSubcategory",
         on_delete=SET_NULL,
         related_name="pages",
         blank=True,
         null=True,
     )
     body = StreamField(KmstcaBlocks())
+    act_as_index = BooleanField(
+        default=False, help_text="Display an alphabetized index of child pages"
+    )
 
     content_panels = Page.content_panels + [
-        FieldPanel("category", icon="tag"),
+        FieldPanel("subcategory", icon="tag"),
+        FieldPanel("act_as_index", icon="form"),
         FieldPanel("body", icon="pilcrow"),
     ]
     base_form_class = ContentPageForm
 
-    search_fields = Page.search_fields + [SearchField("body"), FilterField("category")]
+    search_fields = Page.search_fields + [
+        SearchField("body"),
+        FilterField("subcategory"),
+    ]
 
-    parent_page_types = ["infodesk.IndexPage"]
+    parent_page_types = ["infodesk.CategoryPage", "infodesk.ContentPage"]
+
+    @property
+    def first_letter(self):
+        return self.title[0].upper()
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        if self.act_as_index:
+            context["children"] = ContentPage.objects.order_by("title").child_of(self)
+        return context
 
 
-class IndexPage(Page):
+class CategoryPage(Page):
     colour = CharField(max_length=16, choices=Colour.choices, default=Colour.PRIMARY)
     icon = CharField(max_length=32, verbose_name="BoxIcon class")
     tagline = RichTextField(features=["bold", "italic"])
@@ -64,7 +87,7 @@ class IndexPage(Page):
             heading="Appearance",
             icon="palette",
         ),
-        InlinePanel("categories"),
+        InlinePanel("subcategories"),
         MultiFieldPanel(
             [FieldPanel("pre_body"), FieldPanel("post_body")],
             heading="Content",
@@ -72,6 +95,7 @@ class IndexPage(Page):
         ),
     ]
 
+    parent_page_types = ["home.HomePage"]
     subpage_types = ["infodesk.ContentPage"]
 
     search_fields = Page.search_fields + [SearchField("tagline")]
@@ -79,7 +103,7 @@ class IndexPage(Page):
     def get_context(self, request, *args, **kwargs):
         return {
             **super().get_context(request, *args, **kwargs),
-            "children": ContentPage.objects.select_related("category")
-            .order_by("category__sort_order", "title")
+            "children": ContentPage.objects.select_related("subcategory")
+            .order_by("subcategory__sort_order", "title")
             .child_of(self),
         }
