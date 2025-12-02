@@ -2,7 +2,7 @@ from .base import *  # noqa: F403
 
 DEBUG = False
 
-# Google Cloud storage
+# S3-compatible storage
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
