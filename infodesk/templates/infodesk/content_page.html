@@ -3,9 +3,11 @@
 
 {% block content %}
     <h2 class="page-title">{{ page.title }}</h2>
-    {% for block in page.body %}
-        {% include_block block %}
-    {% endfor %}
+    <article class="content">
+        {% for block in page.body %}
+            {% include_block block %}
+        {% endfor %}
+    </article>
     {% if page.act_as_index %}
         {% regroup children by first_letter as child_groups %}
         <div class="index-nav">

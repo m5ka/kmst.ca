@@ -698,11 +698,13 @@ hr {
   margin-block: 1.2rem 1.8rem;
 }
 
-.content strong {
+.content strong,
+.content b {
   font-weight: bold;
 }
 
-.content em {
+.content em,
+.content i {
   font-style: italic;
 }
 
