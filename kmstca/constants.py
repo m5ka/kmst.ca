@@ -6,3 +6,8 @@ class Colour(TextChoices):
     ACCENT = "accent", "Accent"
     GREEN = "green", "Green"
     CREAM = "cream", "Cream"
+
+
+class ImageSize(TextChoices):
+    THUMBNAIL = "thumb", "Thumbnail"
+    FULL = "full", "Full"

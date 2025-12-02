@@ -790,3 +790,29 @@ hr {
 .index-nav__group {
   margin-block-end: 2.8rem;
 }
+
+.image {
+  max-width: 100%;
+  margin-block: 2.4rem 3.2rem;
+}
+
+.image--thumb {
+  width: fit-content;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #ddd;
+}
+
+.image--full {
+  width: 100%;
+}
+
+.image__image {
+  width: 100%;
+  height: fit-content;
+}
+
+.image__caption {
+  color: var(--coal);
+  margin-block-start: .4rem;
+}

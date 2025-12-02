@@ -1,15 +1,23 @@
-from wagtail.blocks import CharBlock, RichTextBlock, StreamBlock, StructBlock
+from wagtail.blocks import (
+    CharBlock,
+    ChoiceBlock,
+    RichTextBlock,
+    StreamBlock,
+    StructBlock,
+)
 from wagtail.images.blocks import ImageBlock
+
+from kmstca.constants import ImageSize
 
 
 class CaptionedImageBlock(StructBlock):
     image = ImageBlock()
-    caption = CharBlock()
-    source = CharBlock(required=False)
-    date = CharBlock(required=False)
+    caption = CharBlock(required=False)
+    size = ChoiceBlock(choices=ImageSize.choices, default=ImageSize.FULL)
 
     class Meta:
         icon = "image"
+        template = "blocks/image.html"
 
 
 class QuoteBlock(StructBlock):
