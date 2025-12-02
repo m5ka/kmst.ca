@@ -44,7 +44,7 @@ class ContentPage(Page):
         blank=True,
         null=True,
     )
-    body = StreamField(KmstcaBlocks())
+    body = StreamField(KmstcaBlocks(), blank=True)
     act_as_index = BooleanField(
         default=False, help_text="Display an alphabetized index of child pages"
     )
