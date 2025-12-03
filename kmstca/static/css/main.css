@@ -693,9 +693,26 @@ hr {
   }
 }
 
-.content p,
-.content ul {
+.content p {
   margin-block: 1.2rem 1.8rem;
+}
+
+.content ul,
+.content ol {
+  margin-block: 1.2rem 2.4rem;
+}
+
+.content ul {
+  list-style: square;
+  padding-inline-start: 2.4rem;
+}
+
+.content ul li {
+  margin-block-end: 1rem;
+}
+
+.content a {
+  color: var(--accent);
 }
 
 .content strong,
