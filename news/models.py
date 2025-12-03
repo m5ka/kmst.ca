@@ -63,3 +63,9 @@ class Article(Page):
 class ArticleIndex(Page):
     subpage_types = ["news.Article"]
     max_count = 1
+
+    def get_context(self, request, *args, **kwargs):
+        return {
+            **super().get_context(request, *args, **kwargs),
+            "articles": Article.objects.order_by("-first_published_at")[:9],
+        }
