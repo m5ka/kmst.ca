@@ -70,7 +70,11 @@ class ContentPage(Page):
         FilterField("subcategory"),
     ]
 
-    parent_page_types = ["infodesk.CategoryPage", "infodesk.ContentPage"]
+    parent_page_types = [
+        "infodesk.CategoryPage",
+        "infodesk.ContentPage",
+        "wagtailcore.Page",
+    ]
 
     @property
     def first_letter(self):
@@ -104,7 +108,7 @@ class CategoryPage(Page):
         ),
     ]
 
-    parent_page_types = ["home.HomePage"]
+    parent_page_types = ["wagtailcore.Page", "home.HomePage"]
     subpage_types = ["infodesk.ContentPage"]
 
     search_fields = Page.search_fields + [SearchField("tagline")]

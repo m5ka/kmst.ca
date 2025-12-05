@@ -1,5 +1,5 @@
 {% load static wagtailcore_tags wagtailuserbar %}
-
+{% wagtail_site as current_site %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,7 +9,6 @@
             {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
             {% endblock %}
             {% block title_suffix %}
-            {% wagtail_site as current_site %}
             {% if current_site and current_site.site_name %}| {{ current_site.site_name }}{% endif %}
             {% endblock %}
         </title>
@@ -51,19 +50,25 @@
         </div>
         <header class="header">
             <div class="brand">
-                <a href="/" class="brand__link">
-                    <img class="brand__image" src="{% static "images/kasnani.png" %}" alt="Kasnanís Brattén" height="48">
-                    <h1 class="brand__title">kmst<span class="accent">.</span>ca</h1>
+                <a href="{% pageurl current_site.root_page %}" class="brand__link">
+                    <img class="brand__image" src="{{ settings.kmstca.SiteSettings.logo.url }}" alt="{{ current_site.site_name }}" height="48">
+                    {% if current_site.is_default_site %}<h1 class="brand__title">kmst<span class="accent">.</span>ca</h1>{% endif %}
                 </a>
-                <p class="brand__tagline">Kasnanís Kmstaimar</p>
+                <p class="brand__tagline">{{ current_site.site_name }}</p>
             </div>
             <nav class="header-nav">
                 <ul>
-                    <li><a href="#">Stautá <i class="bx bx-chevron-down"></i></a></li>
+                    {% if current_site.is_default_site %}
+                        <li><a href="#">Stautá <i class="bx bx-chevron-down"></i></a></li>
+                    {% else %}
+                        <li><a href="#"><i class="bx bx-arrow-left"></i> kmst<span class="accent">.</span>ca</a></li>
+                    {% endif %}
                     {% block nav_search %}
                     <li><a href="{% url "search" %}" aria-label="Sagitis"><i class="bx bx-search"></i></a></li>
                     {% endblock nav_search %}
-                    <li><a href="#" aria-label="Mén Samitis"><i class="bx bx-user"></i></a></li>
+                    {% if current_site.is_default_site %}
+                        <li><a href="#" aria-label="Mén Samitis"><i class="bx bx-user"></i></a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </header>
