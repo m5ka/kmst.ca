@@ -51,7 +51,9 @@
         <header class="header">
             <div class="brand">
                 <a href="{% pageurl current_site.root_page %}" class="brand__link">
-                    <img class="brand__image" src="{{ settings.kmstca.SiteSettings.logo.url }}" alt="{{ current_site.site_name }}" height="48">
+                    {% if settings.kmstca.SiteSettings.logo %}
+                        <img class="brand__image" src="{{ settings.kmstca.SiteSettings.logo.url }}" alt="{{ current_site.site_name }}" height="48">
+                    {% endif %}
                     {% if current_site.is_default_site %}<h1 class="brand__title">kmst<span class="accent">.</span>ca</h1>{% endif %}
                 </a>
                 <p class="brand__tagline">{{ current_site.site_name }}</p>
