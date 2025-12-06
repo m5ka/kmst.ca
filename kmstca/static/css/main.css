@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Radio+Canada:ital,wght@0,300..700;1,300..700&display=swap');
 
 :root {
   --primary: #3668ab;
@@ -13,7 +13,7 @@
   --page-width: 1024px;
   --page-gutter: 1.6rem;
 
-  --font-stack: "TASA Explorer", -apple-system, Ubuntu, Helvetica, Arial, sans-serif;
+  --font-stack: "Radio Canada", -apple-system, Ubuntu, Helvetica, Arial, sans-serif;
 }
 
 *, *::before, *::after {
