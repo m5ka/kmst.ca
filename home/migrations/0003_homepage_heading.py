@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homepage',
             name='heading',
-            field=models.CharField(default='Ceme uelé', max_length=511),
+            field=models.CharField(default='Ceme welē', max_length=511),
             preserve_default=False,
         ),
     ]

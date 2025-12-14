@@ -3,18 +3,18 @@ from datetime import datetime, timezone
 from django import template
 
 oderian_months = [
-    "Geiám",
-    "Krná",
-    "Krátián",
-    "Uesrán",
-    "Melgintí",
-    "Lentán",
-    "Dassiní",
+    "Gejām",
+    "Krnā",
+    "Krātjān",
+    "Wesrān",
+    "Melgintī",
+    "Lentān",
+    "Dassinī",
     "Esanes",
-    "Kaitinán",
-    "Kerublént",
-    "Kruuanes",
-    "Ieqlá",
+    "Kaitinān",
+    "Kerublēnt",
+    "Kruwanes",
+    "Jeqlā",
 ]
 
 
@@ -32,9 +32,9 @@ def oderian_dateago(value: datetime) -> str:
     if secs < 60:
         return "nu"
     elif mins == 1:
-        return "frai qésini"
+        return "frai qēsini"
     elif mins < 60:
-        return f"frai {mins} qésinamas"
+        return f"frai {mins} qēsinamas"
     elif hours == 1:
         return "frai daitei"
     elif hours < 24:

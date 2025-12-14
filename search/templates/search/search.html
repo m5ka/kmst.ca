@@ -38,14 +38,14 @@
             <a
                 href="{% url 'search' %}?iskatis={{ search_query|urlencode }}&amp;laubam={{ search_results.previous_page_number }}"
                 class="search-paginator__link"
-            ><i class="bx bx-arrow-left"></i> Frná</a>
+            ><i class="bx bx-arrow-left"></i> Frnā</a>
         {% endif %}
 
         {% if search_results.has_next %}
             <a
                 href="{% url 'search' %}?iskatis={{ search_query|urlencode }}&amp;laubam={{ search_results.next_page_number }}"
                 class="search-paginator__link"
-            >Seqntí <i class="bx bx-arrow-right"></i></a>
+            >Seqntī <i class="bx bx-arrow-right"></i></a>
         {% endif %}
     </div>
     {% endif %}
@@ -53,9 +53,9 @@
 
 
 {% elif search_query %}
-    <p class="large">Énu kankutiám.</p>
+    <p class="large">Ēnu kankutjām.</p>
     <p>Sagi kam saniskasi urdai.</p>
 {% else %}
-    <p class="center">Fiki Isuám iskatim uferi</p>
+    <p class="center">Fiki Iswām iskatim uferi</p>
 {% endif %}
 {% endblock %}

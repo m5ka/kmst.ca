@@ -32,18 +32,18 @@
         <div class="security-banner">
             <details class="security-banner__dropdown">
                 <summary class="security-banner__label">
-                    <i class="bx bx-lock security-banner__icon"></i> Uárantí saitám Kasnanís Kmstaimares
+                    <i class="bx bx-lock security-banner__icon"></i> Wārantī saitām Kasnanīs Kmstaimares
                     <i class="bx bx-chevron-down security-banner__chevron--closed"></i>
                     <i class="bx bx-chevron-up security-banner__chevron--open"></i>
                 </summary>
                 <div class="security-banner__body">
                     <div class="security-banner__section">
-                        <h2>Meiniti kmst.ca nás uárantim</h2>
-                        <p>Neudanti aiué saitás Kasnanís Kmstaimares kmst.ca-lndenamm. Frai Isuám dailinti leudinám margatiám, sagi aiué tkistátifalkám (anitamfalkám) ar arni saitames uárants santm.</p>
+                        <h2>Meiniti kmst.ca nās wārantim</h2>
+                        <p>Neudanti aiwē saitās Kasnanīs Kmstaimares kmst.ca-lndenamm. Frai Iswām dailinti leudinām margatjām, sagi aiwē tkistātifalkām (anitamfalkām) ar arni saitames wārants santm.</p>
                     </div>
                     <div class="security-banner__section">
-                        <h2>Tnká esti kí saitám</h2>
-                        <p>Arniti https:// Isuám iugantm Ie kam uáranti saitami, ar Isuám gebantm tnké margatiám.</p>
+                        <h2>Tnkā esti kī saitām</h2>
+                        <p>Arniti https:// Iswām jugantm Je kam wāranti saitami, ar Iswām gebantm tnkē margatjām.</p>
                     </div>
                 </div>
             </details>
@@ -61,7 +61,7 @@
             <nav class="header-nav">
                 <ul>
                     {% if current_site.is_default_site %}
-                        <li><a href="#">Stautá <i class="bx bx-chevron-down"></i></a></li>
+                        <li><a href="#">Stautā <i class="bx bx-chevron-down"></i></a></li>
                     {% else %}
                         <li><a href="https://kmst.ca"><i class="bx bx-arrow-left"></i> kmst<span class="accent">.</span>ca</a></li>
                     {% endif %}
@@ -120,7 +120,7 @@
                 <!-- <a href="#"></a> footer navigation links to go here -->
             </nav>
             <div class="footer__bottom">
-                &copy;2025 Rígiám Kasnanís
+                &copy;{% now "Y" %} {{ settings.kmstca.KmstcaSettings.copyright|default:"Kasnanī" }}
             </div>
         </footer>
 
