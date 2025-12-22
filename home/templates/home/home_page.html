@@ -47,7 +47,7 @@
                 {% endif %}
                 <p class="article-stack-item__metadata">
                     <span class="article-stack-item__category">{{ article.get_category_display }}</span>
-                    <span class="article-stack-item__time">{{ article.last_published_at|oderian_dateago }}</span>
+                    <span class="article-stack-item__time">{{ article.first_published_at|oderian_dateago }}</span>
                 </p>
             </a>
         {% endfor %}

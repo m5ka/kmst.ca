@@ -15,7 +15,8 @@
                 <h2 class="headline__title">{{ page.title }}</h2>
                 <p class="headline__metadata">
                     <span class="headline__category">{{ page.get_category_display }}</span>
-                    {{ page.first_published_at|oderian_dateago }}
+                    {{ page.first_published_at|oderian_dateago }}{% if page.last_published_at > page.first_published_at %},
+                    wandints stalā {{ page.last_published_at|oderian_dateago }}{% endif %}
                 </p>
             </div>
             {% for block in page.body %}
