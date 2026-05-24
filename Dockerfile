@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm
+FROM python:3.13.13-slim-trixie
 
 RUN useradd -m wagtail
 
@@ -6,7 +6,7 @@ EXPOSE 8080
 
 ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_CREATE=false \
-    POETRY_VERSION=2.1.3 \
+    POETRY_VERSION=2.4.1 \
     PORT=8080 \
     PATH="/home/wagtail/.local/bin:$PATH"
 
@@ -20,7 +20,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
  && rm -rf /var/lib/apt/lists/*
 
 USER wagtail
-RUN curl -sSL https://install.python-poetry.org | python - && pip install setuptools "gunicorn==20.0.4"
+RUN curl -sSL https://install.python-poetry.org | python -
 COPY pyproject.toml poetry.lock /
 RUN poetry install --no-interaction --no-root --no-ansi
 
