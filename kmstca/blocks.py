@@ -47,5 +47,8 @@ class KmstcaBlocks(StreamBlock):
     heading = CharBlock(icon="title", template="blocks/heading.html")
     subheading = CharBlock(icon="h2", template="blocks/subheading.html")
     paragraph = RichTextBlock(features=["bold", "italic", "ol", "ul", "hr", "link"])
+    standout_text = RichTextBlock(
+        features=["bold", "italic", "link"], template="blocks/standout_text.html"
+    )
     image = CaptionedImageBlock()
     quote = QuoteBlock()
