@@ -20,7 +20,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
  && rm -rf /var/lib/apt/lists/*
 
 USER wagtail
-RUN curl -sSL https://install.python-poetry.org | python - && pip install "gunicorn==20.0.4"
+RUN curl -sSL https://install.python-poetry.org | python - && pip install setuptools "gunicorn==20.0.4"
 COPY pyproject.toml poetry.lock /
 RUN poetry install --no-interaction --no-root --no-ansi
 
