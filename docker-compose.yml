@@ -1,0 +1,50 @@
+name: kmstca
+services:
+  kmstca:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: >
+      sh -c "
+      python manage.py migrate --noinput &&
+      python manage.py collectstatic --noinput &&
+      gunicorn --bind :3000 --workers 1 --threads 8 --timeout 0 kmstca.wsgi:application
+      "
+    environment:
+      - SERVICE_URL_KMSTCA
+      - KMSTCA_POSTGRES_HOST=postgres
+      - KMSTCA_POSTGRES_PORT=5432
+      - KMSTCA_POSTGRES_NAME=kmstca
+      - KMSTCA_POSTGRES_USER=$SERVICE_USER_POSTGRES
+      - KMSTCA_POSTGRES_PASSWORD=$SERVICE_PASSWORD_POSTGRES
+      - KMSTCA_ALLOWED_HOSTS=$SERVICE_ALLOWED_HOSTS
+      - KMSTCA_BASE_URL=$SERVICE_URL_KMSTCA
+      - KMSTCA_SECRET_KEY=$SERVICE_SECRET_KMSTCA
+      - KMSTCA_STATIC_URL=/static/
+      - KMSTCA_CSRF_ORIGINS=$SERVICE_URL_KMSTCA
+      - KMSTCA_STORAGE_BUCKET_USER_CONTENT=kmstca_user
+      - KMSTCA_STORAGE_BUCKET_STATIC=kmstca_static
+      - KMSTCA_S3_ENDPOINT_URL=$SERVICE_S3_ENDPOINT_KMSTCA
+      - KMSTCA_S3_ACCESS_KEY=$SERVICE_S3_ACCESS_KEY_KMSTCA
+      - KMSTCA_S3_SECRET_KEY=$SERVICE_S3_SECRET_KEY_KMSTCA
+      - DJANGO_SETTINGS_MODULE=kmstca.settings.production
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=kmstca
+      - POSTGRES_USER=$SERVICE_USER_POSTGRES
+      - POSTGRES_PASSWORD=$SERVICE_PASSWORD_POSTGRES
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d kmstca"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+volumes:
+  postgres_data:
