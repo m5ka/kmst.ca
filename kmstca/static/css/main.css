@@ -820,7 +820,7 @@ hr {
 }
 
 .image--thumb {
-  width: fit-content;
+  width: min-content;
   padding: 1rem;
   background: #ffffff;
   border: 1px solid #ddd;
@@ -830,8 +830,11 @@ hr {
   width: 100%;
 }
 
-.image__image {
+.image--full .image__image {
   width: 100%;
+}
+
+.image__image {
   height: fit-content;
 }
 
