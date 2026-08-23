@@ -2,12 +2,12 @@ from django.db.models import TextChoices
 
 
 class NewsCategory(TextChoices):
-    POLITICS = "politics", "Uettis"
-    WORLD = "world", "Ardá"
-    SCIENCE = "science", "Gnátiá"
-    CULTURE = "culture", "Teutá"
+    POLITICS = "politics", "Wettis"
+    WORLD = "world", "Ardā"
+    SCIENCE = "science", "Gnātjā"
+    CULTURE = "culture", "Teutā"
     ENVIRONMENT = "environment", "Mbinektis"
-    BUSINESS = "business", "Meiamtis"
-    CRIME = "crime", "Uargdétiá"
-    SPORTS = "sports", "Gamán"
+    BUSINESS = "business", "Mejamtis"
+    CRIME = "crime", "Wargdētjā"
+    SPORTS = "sports", "Gamān"
     OPINION = "opinion", "Gustus"
