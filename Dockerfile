@@ -1,14 +1,17 @@
 FROM python:3.13.13-slim-trixie
 
+COPY --from=ghcr.io/astral-sh/uv:0.11.31 /uv /uvx /usr/local/bin/
+
 RUN useradd -m wagtail
 
 EXPOSE 8080
 
 ENV PYTHONUNBUFFERED=1 \
-    POETRY_VIRTUALENVS_CREATE=false \
-    POETRY_VERSION=2.4.1 \
     PORT=8080 \
-    PATH="/home/wagtail/.local/bin:$PATH"
+    UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PROJECT_ENVIRONMENT=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
 
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     build-essential \
@@ -16,18 +19,15 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     libjpeg62-turbo-dev \
     zlib1g-dev \
     libwebp-dev \
-    curl \
  && rm -rf /var/lib/apt/lists/*
 
-USER wagtail
-RUN curl -sSL https://install.python-poetry.org | python -
-COPY pyproject.toml poetry.lock /
-RUN poetry install --no-interaction --no-root --no-ansi
-
-USER root
 WORKDIR /app
 RUN chown wagtail:wagtail /app
-COPY --chown=wagtail:wagtail . .
 
 USER wagtail
+COPY --chown=wagtail:wagtail pyproject.toml uv.lock ./
+RUN uv sync --locked --no-dev --no-install-project
+
+COPY --chown=wagtail:wagtail . .
+
 CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 kmstca.wsgi:application

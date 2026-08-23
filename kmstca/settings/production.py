@@ -6,16 +6,16 @@ DEBUG = False
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {"bucket_name": os.environ["KMSTCA_STORAGE_BUCKET_USER_CONTENT"]},
+        "OPTIONS": {"bucket_name": env("STORAGE_BUCKET_USER_CONTENT")},
     },
     "staticfiles": {
         "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {"bucket_name": os.environ["KMSTCA_STORAGE_BUCKET_STATIC"]},
+        "OPTIONS": {"bucket_name": env("STORAGE_BUCKET_STATIC")},
     },
 }
-AWS_S3_ENDPOINT_URL = os.environ["KMSTCA_S3_ENDPOINT_URL"]
-AWS_S3_ACCESS_KEY_ID = os.environ["KMSTCA_S3_ACCESS_KEY"]
-AWS_S3_SECRET_ACCESS_KEY = os.environ["KMSTCA_S3_SECRET_KEY"]
+AWS_S3_ENDPOINT_URL = env("KMSTCA_S3_ENDPOINT_URL")
+AWS_S3_ACCESS_KEY_ID = env("KMSTCA_S3_ACCESS_KEY")
+AWS_S3_SECRET_ACCESS_KEY = env("KMSTCA_S3_SECRET_KEY")
 AWS_DEFAULT_ACL = "public-read"
 AWS_S3_SIGNATURE_VERSION = "s3"
 AWS_QUERYSTRING_AUTH = False

@@ -1,4 +1,4 @@
-RUN=poetry run
+RUN=uv run
 MANAGE=$(RUN) python manage.py
 
 .PHONY: checkmigrations checkpy dev format migrate migrations superuser test

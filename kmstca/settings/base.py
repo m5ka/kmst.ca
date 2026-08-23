@@ -1,13 +1,19 @@
-import os
+from pathlib import Path
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+from environs import Env
+
+
+PROJECT_DIR = Path(__file__).parent.parent
+BASE_DIR = PROJECT_DIR.parent
+
+env = Env(prefix="KMSTCA_")
+env.read_env()
 
 
 # Security and CSRF
-SECRET_KEY = os.environ["KMSTCA_SECRET_KEY"]
-ALLOWED_HOSTS = os.environ["KMSTCA_ALLOWED_HOSTS"].split(",")
-CSRF_TRUSTED_ORIGINS = os.environ["KMSTCA_CSRF_ORIGINS"].split(",")
+SECRET_KEY = env("SECRET_KEY")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_ORIGINS")
 
 
 # Application definition
@@ -38,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
     "django_minify_html",
 ]
 
@@ -80,11 +87,11 @@ WSGI_APPLICATION = "kmstca.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["KMSTCA_POSTGRES_NAME"],
-        "USER": os.environ["KMSTCA_POSTGRES_USER"],
-        "PASSWORD": os.environ["KMSTCA_POSTGRES_PASSWORD"],
-        "HOST": os.environ["KMSTCA_POSTGRES_HOST"],
-        "PORT": os.environ["KMSTCA_POSTGRES_PORT"],
+        "NAME": env("POSTGRES_NAME"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("POSTGRES_HOST"),
+        "PORT": env("POSTGRES_PORT"),
         "CONN_HEALTH_CHECKS": True,
         "OPTIONS": {
             "pool": {
@@ -142,10 +149,10 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATICFILES_DIRS = [os.path.join(PROJECT_DIR, "static")]
+STATICFILES_DIRS = [PROJECT_DIR / "static"]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATIC_URL = os.environ["KMSTCA_STATIC_URL"]
+STATIC_ROOT = BASE_DIR / "static"
+STATIC_URL = env("STATIC_URL")
 
 
 # Storage
@@ -172,7 +179,7 @@ WAGTAILSEARCH_BACKENDS = {"default": {"BACKEND": "wagtail.search.backends.databa
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = os.environ["KMSTCA_BASE_URL"]
+WAGTAILADMIN_BASE_URL = env("BASE_URL")
 
 # Allowed file extensions for documents in the document library.
 # This can be omitted to allow all files, but note that this may present a security risk
